@@ -75,4 +75,6 @@ RSpec.describe User, type: :model do
 		}
 		its(:email) { should eq email_with_mixed_case.downcase}
 	end
+
+	it { expect(user.authenticated?(:remember, '')).to eq(false)}
 end

@@ -29,6 +29,7 @@ RSpec.describe "UsersSignups", type: :request do
   		expect(response).to redirect_to(user)
   		follow_redirect!
   		expect(response).to render_template('users/show')
+      expect(is_logged_in?).to eq(true)
       expect(response.body).to include('alert alert-success')
       expect(response.body).to include('Welcome to the Sample App')
   	end
