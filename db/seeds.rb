@@ -10,7 +10,9 @@ User.create!(
 	email: 'example@railstutorial.org',
 	password: '123',
 	password_confirmation: '123',
-	admin: true
+	admin: true,
+	activated: true,
+	activated_at: Time.now.to_datetime
 	)
 
 
@@ -19,7 +21,9 @@ User.create!(
 		name: Faker::Name.name,
 		email: "example-#{n+1}@railstutorial.org",
 		password: 'password',
-		password_confirmation: 'password'
+		password_confirmation: 'password',
+		activated: true,
+		activated_at: Time.now.to_datetime
 	)
 end
 

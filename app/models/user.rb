@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
-	attr_accessor :remember_token
+	attr_accessor :remember_token, :activation_token
 	has_secure_password
 	before_save { self.email = self.email.downcase }
+	before_create :create_activation_digest
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :password, length: {minimum:3}, allow_blank: true
 	validates :email, presence: true, 
@@ -27,8 +28,14 @@ class User < ActiveRecord::Base
 	end
 
 	def authenticated?(attribute, token)
-		digest = self.send("#{attribute}_token")
+		digest = self.send("#{attribute}_digest")
 		return false if digest.nil?
-		BCrypt::Password.new(digest).is_password?(remember_token)
+		BCrypt::Password.new(digest).is_password?(token)
 	end
+
+	private
+		def create_activation_digest
+			self.activation_token = User.new_token
+			self.activation_digest = User.digest(self.activation_token)
+		end
 end
