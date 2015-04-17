@@ -14,13 +14,13 @@ RSpec.describe "UsersLogins", type: :request do
   end
 
   context 'login with valid info followed by logout' do
-    let(:user) { FactoryGirl.create(:user)}    
 
     it 'should login user' do
+      @user = FactoryGirl.create(:user)
       get login_path
-      post login_path, session: { email: user.email, password: user.password }
+      post login_path, session: { email: @user.email, password: @user.password }
       expect(is_logged_in?).to eq(true)
-      expect(response).to redirect_to user
+      expect(response).to redirect_to @user
       follow_redirect!
       expect(response).to render_template('users/show')
       expect(response.body).to include('Log out')

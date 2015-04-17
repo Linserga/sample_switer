@@ -18,7 +18,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   it 'should redirect edit when not logged in' do
-  	get :edit, id: user
+  	get :edit, id: user.id
   	expect(flash).not_to be_empty
   	expect(response).to redirect_to(login_url)
   end

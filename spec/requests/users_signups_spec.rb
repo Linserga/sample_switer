@@ -26,10 +26,10 @@ RSpec.describe "UsersSignups", type: :request do
 
   		user = User.find_by(email: 'user@mail.com')
 
-  		expect(response).to redirect_to(user)
+  		expect(response).to redirect_to(root_url)
   		follow_redirect!
-  		expect(response).to render_template('users/show')
-      expect(is_logged_in?).to eq(true)
+  		expect(response).to render_template('user_mailer/account_activation')
+      expect(is_logged_in?).to eq(false)
       expect(response.body).to include('alert alert-success')
       expect(response.body).to include('Welcome to the Sample App')
   	end
